@@ -8,18 +8,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    const noteList = document.querySelector("#note_list");
-    let noteOneLowBuffer, noteTwoLowBuffer, noteThreeLowBuffer, noteFourLowBuffer, noteFiveLowBuffer, noteSixLowBuffer, noteSevenLowBuffer, noteEightLowBuffer;
-    let noteOneMidBuffer, noteTwoMidBuffer, noteThreeMidBuffer, noteFourMidBuffer, noteFiveMidBuffer, noteSixMidBuffer, noteSevenMidBuffer, noteEightMidBuffer;
-    let noteOneHighBuffer, noteTwoHighBuffer, noteThreeHighBuffer, noteFourHighBuffer, noteFiveHighBuffer, noteSixLHighuffer, noteSevenHighBuffer, noteEightHighBuffer;
     const context = new AudioContext();
-
+    
     function createNoteObjects(json_data) {
         return json_data.map((note) => {
             return new Note(note.name, note.low_url, note.mid_url, note.high_url);
         })
     }
-
+    
     function initialLoad() {
         fetch('http://localhost:3000/notes')
         .then(response => response.json())
@@ -28,48 +24,92 @@ document.addEventListener("DOMContentLoaded", function() {
             setBuffers(noteObjects)
         })
     }
-
-    function setBuffers(noteObjects) {
-        loadNote(noteObjects[0].low_url, noteOneLowBuffer);
-        loadNote(noteObjects[1].low_url, noteTwoLowBuffer);
-        loadNote(noteObjects[2].low_url, noteThreeLowBuffer);
-        loadNote(noteObjects[3].low_url, noteFourLowBuffer);
-        loadNote(noteObjects[4].low_url, noteFiveLowBuffer);
-        loadNote(noteObjects[5].low_url, noteSixLowBuffer);
-        loadNote(noteObjects[6].low_url, noteSevenLowBuffer);
-        loadNote(noteObjects[7].low_url, noteEightLowBuffer);
+    
+    function setBuffers(noteObjects){
+        loadNotes(noteObjects);
     }
     
     initialLoad()
-
-
-    function loadNote(url, target) {
-        window.fetch(url)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
-        .then(audioBuffer => {
-            target = audioBuffer;
-        });
+    
+    let lowNotes = [];
+    let midNotes = [];
+    let highNotes = [];
+    function loadNotes(noteObjects) {
+        for (let i = 0; i < noteObjects.length; i++) {
+            fetch(noteObjects[i].low_url)
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+            .then(audioBuffer => {
+                lowNotes[i] = audioBuffer;
+            });
+        }
+        for (let i = 0; i < noteObjects.length; i++) {
+            fetch(noteObjects[i].mid_url)
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+            .then(audioBuffer => {
+                midNotes[i] = audioBuffer;
+            });
+        }
+        for (let i = 0; i < noteObjects.length; i++) {
+            fetch(noteObjects[i].high_url)
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+            .then(audioBuffer => {
+                highNotes[i] = audioBuffer;
+            });
+        }
     }
         
     document.addEventListener('keydown', function(e) {
         if (e.key === 'z') {
-            console.log("note One")
-            play(noteOneLowBuffer)
+            play(lowNotes[0])
         } else if (e.key === 'x') {
-            play(noteTwoLowBuffer)
+            play(lowNotes[1])
         } else if (e.key === 'c') {
-            play(noteThreeLowBuffer)
+            play(lowNotes[2])
         } else if (e.key === 'v') {
-            play(noteFourLowBuffer)
+            play(lowNotes[3])
         } else if (e.key === 'm') {
-            play(noteFiveLowBuffer)
+            play(lowNotes[4])
         } else if (e.key === ',') {
-            play(noteSixLowBuffer)
+            play(lowNotes[5])
         } else if (e.key === '.') {
-            play(noteSevenLowBuffer)
+            play(lowNotes[6])
         } else if (e.key === '/') {
-            play(noteEightLowBuffer)
+            play(lowNotes[7])
+        } else if (e.key === 'a') {
+            play(midNotes[0])
+        } else if (e.key === 's') {
+            play(midNotes[1])
+        } else if (e.key === 'd') {
+            play(midNotes[2])
+        } else if (e.key === 'f') {
+            play(midNotes[3])
+        } else if (e.key === 'j') {
+            play(midNotes[4])
+        } else if (e.key === 'k') {
+            play(midNotes[5])
+        } else if (e.key === 'l') {
+            play(midNotes[6])
+        } else if (e.key === ';') {
+            play(midNotes[7])
+        } else if (e.key === 'q') {
+            play(highNotes[0])
+        } else if (e.key === 'w') {
+            play(highNotes[1])
+        } else if (e.key === 'e') {
+            play(highNotes[2])
+        } else if (e.key === 'r') {
+            play(highNotes[3])
+        } else if (e.key === 'u') {
+            play(highNotes[4])
+        } else if (e.key === 'i') {
+            play(highNotes[5])
+        } else if (e.key === 'o') {
+            play(highNotes[6])
+        } else if (e.key === 'p') {
+            play(highNotes[7])
         }
     });
 
