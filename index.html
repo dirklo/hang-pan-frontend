@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Hang Pan</title>
+        <title>Pantam</title>
         <link rel="stylesheet" href="app.css">
         <script src="app.js"></script>
     </head>
@@ -12,44 +12,76 @@
         <div id="load-screen">
             <h1>Loading...</h1>
         </div>
-        <main class="container">
-            <span id="note-label-1" class="note-label"></span>
-            <span id="note-label-2" class="note-label"></span>
-            <span id="note-label-3" class="note-label"></span>
-            <span id="note-label-4" class="note-label"></span>
-            <span id="note-label-5" class="note-label"></span>
-            <span id="note-label-6" class="note-label"></span>
-            <span id="note-label-7" class="note-label"></span>
-            <span id="note-label-8" class="note-label"></span>
-            <span id="note-label-9" class="note-label"></span>
-            <img src="img/bg.png" id="bg-image" alt="">
-            <div id="notes-select-div">
-                <label for="note1">Note 1</label>
-                <select id="note1"></select><br>
-                <label for="note2">Note 2</label>
-                <select id="note2"></select><br>
-                <label for="note3">Note 3</label>
-                <select id="note3"></select><br>
-                <label for="note4">Note 4</label>
-                <select id="note4"></select><br>
-                <label for="note5">Note 5</label>
-                <select id="note5"></select><br>
-                <label for="note6">Note 6</label>
-                <select id="note6"></select><br>
-                <label for="note7">Note 7</label>
-                <select id="note7"></select><br>
-                <label for="note8">Note 8</label>
-                <select id="note8"></select><br>
-                <label for="note9">Note 9</label>
-                <select id="note9"></select><br>
-            </div>
-            <div id="save-scale-div">
-                <div>
-                    <label for="scale">Scale</label>
-                    <select name="scale" id="scale"></select><br>
+        <main id="container">
+            <section id="pan-container">
+                <div id="flash-notice-div"></div>
+                <span id="note-label-1" class="note-label"></span>
+                <span id="note-label-2" class="note-label"></span>
+                <span id="note-label-3" class="note-label"></span>
+                <span id="note-label-4" class="note-label"></span>
+                <span id="note-label-5" class="note-label"></span>
+                <span id="note-label-6" class="note-label"></span>
+                <span id="note-label-7" class="note-label"></span>
+                <span id="note-label-8" class="note-label"></span>
+                <span id="note-label-9" class="note-label"></span>
+                <img src="img/bg.png" id="bg-image" alt="">
+            </section>
+            <section id="note-selects-container">
+                <div id="note-selects-title">
+                    <h2 id="note-select-expand-button">Note Select</h2>&nbsp<div class="arrow"></div>
                 </div>
+                <br><br>
+                <div id="note-selects-body">
+                    <span>
+                        <label for="note1">1:&nbsp</label>
+                        <select id="note1"></select><br>
+                    </span>
+                    <span>
+                        <label for="note2">2:&nbsp</label>
+                        <select id="note2"></select><br>
+                    </span>
+                    <span>
+                        <label for="note3">3:&nbsp</label>
+                        <select id="note3"></select><br>
+                    </span>
+                    <span>
+                        <label for="note4">4:&nbsp</label>
+                        <select id="note4"></select><br>
+                    </span>
+                    <span>
+                        <label for="note5">5:&nbsp</label>
+                        <select id="note5"></select><br>
+                    </span>
+                    <span>
+                        <label for="note6">6:&nbsp</label>
+                        <select id="note6"></select><br>
+                    </span>
+                    <span>
+                        <label for="note7">7:&nbsp</label>
+                        <select id="note7"></select><br>
+                    </span>
+                    <span>
+                        <label for="note8">8:&nbsp</label>
+                        <select id="note8"></select><br>
+                    </span>
+                    <span>
+                        <label for="note9">9:&nbsp</label>
+                        <select id="note9"></select><br>
+                    </span>
+                </div>
+            </section>
+            <section id="title-div">
+                <h1 id="main-title">Pantam</h1>
+                <div class="dec-circle1"></div>
+                <div class="dec-circle2"></div>
+                <div class="dec-circle3"></div>
+            </section>
+            <section id="save-scale-div">
+                <select name="scale" id="scale"></select>
+                <div class="custom-arrow"></div>
+                <br>
                 <button type='button' id='save-scale-button'>Save This Scale</button>
-            </div>
+            </section>
         </main>
     </body>
 </html>

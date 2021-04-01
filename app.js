@@ -34,14 +34,19 @@ document.addEventListener("DOMContentLoaded", function() {
         return this.find((item) => item.id === searchId)
     }
 
+    Array.prototype.find_by_name = function(searchName) {
+        return this.find((item) => item.name === searchName)
+    }
+
     //INITIAL DOM AND OBJECT MANAGEMENT
 
     const context = new AudioContext();
-    const noteSelects = document.querySelector('#notes-select-div').querySelectorAll('select');
+    const noteSelects = document.querySelector('#note-selects-container').querySelectorAll('select');
     const scaleSelect = document.querySelector('#scale');
     const noteLabels = document.querySelectorAll('.note-label')
     const loadScreen = document.querySelector('#load-screen')
-    const container = document.querySelector('.container')
+    const panContainer = document.querySelector('#pan-container')
+    const container = document.querySelector('#container')
     let noteObjects = []
     let scaleObjects = []
     let currentScale = [] 
@@ -87,23 +92,22 @@ document.addEventListener("DOMContentLoaded", function() {
     async function initialLoad() {
         await fetch('http://localhost:3000/notes')
         .then(response => response.json())
-        .then((json) => {
-            noteObjects = createNoteObjects(json);
-        })
-        await noteObjects.map((note) => {
-            return note.addNoteBuffers();
-        })
-        await populateNoteSelects(noteObjects);
+        .then(json => noteObjects = createNoteObjects(json));
+        await noteObjects.map(note => note.addNoteBuffers());
+        populateNoteSelects(noteObjects);
 
-        await fetch('http://localhost:3000/scales')
-        .then(response => response.json())
-        .then((json) => {
-            scaleObjects = createScaleObjects(json);
-        })
-        populateScaleSelect(scaleObjects);
+        await fetchScales();
+
         loadScale(1);
         loadScreen.classList.add('hidden');
         container.classList.add('load');
+    }
+
+    async function fetchScales() {
+        scaleObjects = await fetch('http://localhost:3000/scales')
+        .then(response => response.json())
+        .then(json => createScaleObjects(json));
+        populateScaleSelect(scaleObjects)
     }
     
     initialLoad()
@@ -112,6 +116,10 @@ document.addEventListener("DOMContentLoaded", function() {
     
     //SWITCHING SCALES AND SAMPLES
     
+    const noteSelectsTitle = document.querySelector('#note-selects-title')
+    const noteSelectsContainer = document.querySelector('#note-selects-container')
+    const arrow = document.querySelector(".arrow")
+
     function loadScale(id) {
         fetch(`http://localhost:3000/scales/${id}`)
         .then(response => response.json())
@@ -119,13 +127,13 @@ document.addEventListener("DOMContentLoaded", function() {
             for (let i = 0; i < scaleNotes.length; i++) {
                 let note = noteObjects.find_by_id(scaleNotes[i].id)
                 currentScale[i] = note
-                updateNote(note, i)
+                updateNoteSelect(note, i)
             }
             populateLabels()
         })
     }
 
-    function updateNote(note, noteIndex) {
+    function updateNoteSelect(note, noteIndex) {
         noteSelects[noteIndex].value = note.id
     }
     
@@ -138,9 +146,32 @@ document.addEventListener("DOMContentLoaded", function() {
             let noteIndex = parseInt(e.target.id.slice(4)) - 1;
             let note = noteObjects.find_by_id(parseInt(e.target.value))
             currentScale[noteIndex] = note
-            populateLabels()
-        })
+            populateLabels();
+        });
+        select.onclick = function(e) {
+            e.stopPropagation();
+        }
     };
+
+    noteSelects.forEach(select => {
+        select.onclick = (e) => e.stopPropagation()
+    })
+
+    noteSelectsContainer.onclick = (e) => e.stopPropagation()
+
+    noteSelectsTitle.addEventListener('click', function (e) {
+        e.stopPropagation()
+        noteSelectsContainer.classList.toggle('select-expand');
+        arrow.classList.toggle('rotate');
+    })
+
+    document.addEventListener('click', function(e) {
+        if (noteSelectsContainer.className === 'select-expand') {
+            noteSelectsTitle.click();
+        }
+    })
+
+
 
 
 
@@ -156,24 +187,27 @@ document.addEventListener("DOMContentLoaded", function() {
         formName.id = "scale-name";
         formName.name = "scale-name";
         formName.type = "text";
+        formName.placeholder = "Name Your Scale";
         saveScaleDiv.append(formName);
         submitButton = document.createElement('button')
-        submitButton.innerText = "Save New Scale"
+        submitButton.innerText = "Save"
         submitButton.type = "button"
         saveScaleDiv.append(submitButton);
         submitButton.addEventListener('click', saveNewScale)
+        formName.addEventListener('keydown', function (e) {
+            e.stopPropagation();
+        }, false);
     }
 
-    function saveNewScale() {
+    async function saveNewScale() {
         const scaleName = document.querySelector('#scale-name')
         data = {
             name: scaleName.value,
-            ...noteObjects.map((note) => note.id)
+            ...currentScale.map((note) => note.id)
         }
-        console.log(data)
         config = {
             method: "post",
-            headers: {
+            headers: { 
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
@@ -181,36 +215,110 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         fetch('http://localhost:3000/scales', config)
-        .then(response => console.log(response))
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(error => { throw error })
+            } else {
+                return response.json();
+            }
+        })
+        .then(scale => {
+            flashNotice(`${scale.name} Sucessfully Saved!`, true)
+            resetScaleSelect(scaleName)
+        })
+        .catch(error => {
+            flashNotice(`Scale not saved: ${error.message}`, false);
+            scaleName.classList.add('red-border');
+        });
+    }
+
+    function flashNotice(message, success) {
+        const notice = document.querySelector('#flash-notice-div');
+        notice.innerText = message;
+        let status
+        success ? status = 'flash-success' : status = 'flash-alert';
+        notice.classList.add(`${status}`);
+        notice.classList.add('expand');
+
+        setTimeout(function() {
+            notice.classList.remove('expand')
+        }, 5000);
+    }
+
+    function resetScaleSelect(scaleName) {
+        scaleName.remove()
+        const button = document.createElement('button');
+        button.type = 'button'
+        button.id = 'save-scale-button'
+        button.innerText = 'Save This Scale'
+        saveScaleDiv.append(button)
+        button.addEventListener('click', loadForm);
+
+        scaleSelect.childNodes.forEach(node => node.remove())
+        populateScaleSelect()
     }
 
     // PERFORMANCE
         
     document.addEventListener('keydown', function(e) {
-        const lowKeys = ['z', 'x', 'c', 'v', 'n', 'm', ',', '.', '/']
-        for (let i = 0; i < currentScale.length; i++){
-            if (e.key === lowKeys[i]){
-                play(currentScale[i].lowBuffer)
-            }
-        }
-        const midKeys = ['a', 's', 'd', 'f', 'h', 'j', 'k', 'l', ';']
-        for (let i = 0; i < currentScale.length; i++){
-            if (e.key === midKeys[i]){
-                play(currentScale[i].midBuffer)
-            }
-        }
-        const highKeys = ['q', 'w', 'e', 'r', 'y', 'u', 'i', 'o', 'p']
-        for (let i = 0; i < currentScale.length; i++){
-            if (e.key === highKeys[i]){
-                play(currentScale[i].highBuffer)
+        const keyZones = [
+                ['z', 'x', 'c', 'v', 'n', 'm', ',', '.', '/'],
+                ['a', 's', 'd', 'f', 'h', 'j', 'k', 'l', ';'],
+                ['q', 'w', 'e', 'r', 'y', 'u', 'i', 'o', 'p']
+        ]
+        for (let i = 0; i < keyZones.length; i++) {
+            if (keyZones[i].includes(e.key)) {
+                const index = keyZones[i].indexOf(e.key);
+                const buffers = [
+                    currentScale[index].lowBuffer, 
+                    currentScale[index].midBuffer, 
+                    currentScale[index].highBuffer
+                ];
+                const velocities = ['low', 'mid', 'high'];
+                play(buffers[i]);
+                createRipple(index, velocities[i]);
+                break;
             }
         }
     });
+
+    for (let label of noteLabels) {
+        label.addEventListener('click', function(e) {
+            const noteIndex = parseInt(e.target.id.slice(11)) - 1;
+            play(currentScale[noteIndex].midBuffer);
+            createRipple(noteIndex, 'mid');
+        });
+    }
 
     function play(audioBuffer) {
         const source = context.createBufferSource();
         source.buffer = audioBuffer;
         source.connect(context.destination);
         source.start();
-      }
+    }
+
+    function createRipple(index, velocity) {
+        const circle = document.createElement('div');
+        noteLabels[index].appendChild(circle);
+        circle.style.width = '10px';
+        circle.style.height = '10px';
+        circle.classList.add('ripple');
+        
+        let color
+        switch(velocity) {
+            case 'mid':
+                color = 'rgba(0, 255, 255, 0.7)';
+                break;
+            case 'high':
+                color = 'rgba(255, 0, 0, 0.7)';
+                break;
+            default: 
+                color = 'rgba(255, 255, 255, 0.7)';
+        }
+        circle.style.backgroundColor = color;
+        
+        setTimeout(function (){
+            circle.remove()
+        }, 1000)
+    }
 })
