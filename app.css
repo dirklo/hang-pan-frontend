@@ -56,17 +56,17 @@ body {
 
 #flash-notice-div {
     position: absolute;
-    top: 20%;
-    left: 50%;
-    width: 50%;
+    top: 0;
+    margin-left: auto;
+    margin-right: auto;
     height: 0;
     border-radius: 10px;
     color:rgba(255, 255, 255);
     text-align: center;
     font-size: 3vh;
     text-shadow: 1px 1px 2px black;
-    overflow: hidden;
     transition: height 1s ease;
+    z-index: 20;
 }
 
 .load {
@@ -74,11 +74,11 @@ body {
 }
 
 .flash-success {
-    background-color: rgba(50, 96, 50, 0.922);
+    background-color: rgb(50, 96, 50);
 }
 
 .flash-alert {
-    background-color: rgba(96, 50, 50, 0.819);
+    background-color: rgb(96, 50, 50);
 }
 
 .red-border {
@@ -90,7 +90,8 @@ body {
 }
 
 .expand {
-    height: 60px !important;
+    height: fit-content !important;
+    padding: 10px !important;
 }
 
 /* MAIN TITLE DESIGN */
@@ -221,8 +222,7 @@ body {
 
 .select-expand h2 {
     color: white;
-    text-shadow: 3px 3px 4px black;
-    text-shadow: -3px -3px 4px black;
+    text-shadow: 3px 3px 4px black, -3px -3px 4px black;
 }
 
 .rotate {
@@ -272,7 +272,7 @@ body {
     color: white;
 }
 
-#scale-name {
+#scale-name-input {
     padding: 10px;
     width: 100%;
 }
