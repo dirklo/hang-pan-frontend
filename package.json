@@ -1,0 +1,19 @@
+{
+  "name": "hang-pan-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dirklo/hang-pan-frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dirklo/hang-pan-frontend/issues"
+  },
+  "homepage": "https://github.com/dirklo/hang-pan-frontend#readme"
+}
