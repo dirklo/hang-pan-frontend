@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pantam</title>
-        <link rel="stylesheet" href="app.css">
+        <link rel="stylesheet" href="css/app.css">
     </head>
     <body>
         <div id="load-screen">
@@ -25,8 +25,8 @@
                 <img src="img/bg.png" id="bg-image" alt="">
             </section>
             <section id="note-selects-container">
-                <div id="note-selects-title">
-                    <h2 id="note-select-expand-button">Note Select</h2>&nbsp<div class="arrow"></div>
+                <div id="note-selects-title" class="dropdown-control">
+                    <h2 id="note-select-expand-button">Note Select</h2>&nbsp<div id="notes-arrow"></div>
                 </div>
                 <br><br>
                 <div id="note-selects-body">
@@ -68,6 +68,32 @@
                     </span>
                 </div>
             </section>
+            <section id="effects-container">
+                <div id="effects-title" class="dropdown-control">
+                    <h2 id="effects-expand-button">Effects</h2>&nbsp<div id="effects-arrow"></div>
+                </div>
+                <br><br>
+                <div id="effects-body">
+                    <label for="volume-controller">Volume</label>
+                    <input id='volume-controller' type="range" min = "0" max = "1" step='0.05' value='.75'>
+                    <label for="delay-time-controller">Delay Time</label>
+                    <input id='delay-time-controller' type="range" min = "0" max = "1" step='0.05' value='0'>
+                    <label for="delay-feedback-controller">Delay Feedback</label>
+                    <input id='delay-feedback-controller' type="range" min = "0" max = ".9" step='0.05' value='0'>
+                    <label for="delay-amount-controller">Delay Amount</label>
+                    <input id='delay-amount-controller' type="range" min = "0" max = ".9" step='0.05' value='0'>
+                    <label for="reverb-wet-controller">Reverb Wet</label>
+                    <input id='reverb-wet-controller' type="range" min = "0" max = "1" step='0.05' value='0'>
+                    <label for="reverb-dry-controller">Reverb Dry</label>
+                    <input id='reverb-dry-controller' type="range" min = "0" max = "1" step='0.05' value='1'>
+                    <label for="reverb-select">Reverb Type</label>
+                    <select id="reverb-select">
+                        <option value="1">Room</option>
+                        <option value="2">Hall</option>
+                        <option value="3">Outdoor</option>
+                    </select>
+                </div>
+            </section>
             <section id="title-div">
                 <h1 id="main-title">Pantam</h1>
                 <div class="dec-circle1"></div>
@@ -84,12 +110,13 @@
             </section>
             <div id="flash-notice-div"></div>
         </main>
-        <script src="array.js"></script>
-        <script src="note.js"></script>
-        <script src="scale.js"></script>
-        <script src="apiloader.js"></script>
-        <script src="domupdater.js"></script>
-        <script src="performer.js"></script>
-        <script src="app.js"></script>
+        <script src="js/array.js"></script>
+        <script src="js/note.js"></script>
+        <script src="js/scale.js"></script>
+        <script src="js/apiloader.js"></script>
+        <script src="js/domupdater.js"></script>
+        <script src="js/performer.js"></script>
+        <script src="js/effectscontrols.js"></script>
+        <script src="js/app.js"></script>
     </body>
 </html>
