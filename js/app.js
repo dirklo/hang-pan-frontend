@@ -1,3 +1,13 @@
+var AudioContext = window.AudioContext // Default
+    || window.webkitAudioContext // Safari and old versions of Chrome
+    || false;
+
+if (AudioContext) {
+    var context = new AudioContext();
+} else {
+    alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
+}
+
 const loadScreen = document.querySelector('#load-screen');
 const container = document.querySelector('#container');
 
@@ -89,7 +99,6 @@ for (let select of noteSelects) {
 
 
 //EFFECTS
-const context = new AudioContext();
 const masterVolume = context.createGain();
 const delay = context.createDelay();
 const feedback = context.createGain();
@@ -173,7 +182,7 @@ document.addEventListener('keydown', function(e) {
                 currentScale[index].highBuffer
             ];
             const velocities = ['low', 'mid', 'high'];
-            performer.play(buffers[i], context);
+            performer.play(buffers[i]);
             performer.createRipple(index, velocities[i]);
             break;
         }

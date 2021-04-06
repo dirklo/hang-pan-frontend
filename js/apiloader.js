@@ -70,14 +70,23 @@ const apiLoader = {
             'https://res.cloudinary.com/dn4l2f1ea/video/upload/v1617632408/hang-pan/Impulse%20Responses/hall_zdubir.mp3',
             'https://res.cloudinary.com/dn4l2f1ea/video/upload/v1617632408/hang-pan/Impulse%20Responses/outdoor_b9gvkp.mp3'
         ]
-        const [roomBuffer, hallBuffer, outdoorBuffer] = await Promise.all(urls.map(url => 
+        await Promise.all(urls.map(url => 
             fetch(url)
             .then(response => response.arrayBuffer())
-            .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+            .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => reverbBuffers.push(buffer), (e) => console.log(e)))
         ));
-        reverbBuffers[0] = roomBuffer;
-        reverbBuffers[1] = hallBuffer;
-        reverbBuffers[2] = outdoorBuffer;
         reverb.buffer = reverbBuffers[0];
+    },
+
+    fetchBuffers: async function(urls) {
+        fetch(this.low_url)
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => {this.lowBuffer = buffer}, (e) => console.log(e)))
+        fetch(this.mid_url)
+        .then(raw => raw.arrayBuffer())
+        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.midBuffer = buffer, (e) => console.log(e)))
+        fetch(this.high_url)
+        .then(raw => raw.arrayBuffer())
+        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.highBuffer = buffer, (e) => console.log(e)))
     }
 }

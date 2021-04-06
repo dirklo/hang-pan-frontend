@@ -180,13 +180,14 @@ body {
     top: 5%;
     left: 0;
     height: 7%;
-    width: max(25%, 190px);
+    overflow-y: hidden;
+    width: min(42%, 190px);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.429);
-    overflow: hidden;
     background-color:rgba(81, 66, 97, 0.833);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
     z-index: 20;
     transition: all .5s ease;
 }
@@ -209,10 +210,11 @@ body {
 
 #note-selects-container label {
     color: white;
-    font-size: 3vw;
+    font-size: min(3vw, 30px);
 } 
 
 #note-selects-title {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -231,11 +233,12 @@ body {
 }
 
 #note-selects-body {
-    flex: 1;
+    position: relative;
     display: flex;
+    flex: 1;
     flex-direction: column;
-    justify-content: space-evenly;    
-
+    justify-content: space-evenly;
+    overflow-y: hidden;
 }
 
 #note-select-expand-button {
@@ -256,7 +259,7 @@ body {
     top: 5%;
     right: 0;
     height: 7%;
-    width: max(25%, 190px);
+    width: min(42%, 190px);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.429);
     overflow: hidden;
     background-color:rgba(81, 66, 97, 0.833);
@@ -269,7 +272,7 @@ body {
 
 #effects-container label {
     color: white;
-    font-size: 3vw;
+    font-size: min(3vw, 25px);
 } 
 
 #effects-title {
@@ -283,6 +286,7 @@ body {
 #effects-body {
     flex: 1;
     display: flex;
+    overflow-y: hidden;
     flex-direction: column;
     justify-content: space-evenly;    
 
@@ -403,7 +407,7 @@ input[type='range']:focus{
 
 /* PERFORMANCE */
 .note-label {
-    font-size: 3vw;
+    font-size: min(3vw, 25px);
     color: white;
     text-shadow: 1px 1px 2px black;
     cursor: pointer;

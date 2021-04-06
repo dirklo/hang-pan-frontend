@@ -7,16 +7,8 @@ class Note {
         this.high_url = high_url;
     };
 
+
     async addNoteBuffers() {
-        const urls = [this.low_url, this.mid_url, this.high_url]
-        const [lowBuffer, midBuffer, highBuffer] = await Promise.all(urls.map(url => 
-            fetch(url)
-            .then(response => response.arrayBuffer())
-            .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
-        ));
-        this.lowBuffer = lowBuffer
-        this.midBuffer = midBuffer
-        this.highBuffer = highBuffer
-        return this
-    };
+        await apiLoader.fetchBuffers.call(this)
+    }
 };
