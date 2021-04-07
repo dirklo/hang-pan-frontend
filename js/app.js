@@ -8,6 +8,19 @@ if (AudioContext) {
     alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
 }
 
+const noteSelectsContainer = document.querySelector('#note-selects-container');
+const noteSelects = document.querySelector('#note-selects-container').querySelectorAll('select');
+const noteSelectsTitle = document.querySelector('#note-selects-title');
+const notesArrow = document.querySelector("#notes-arrow");
+
+const effectsContainer = document.querySelector('#effects-container');
+const effectsTitle = document.querySelector('#effects-title');
+const effectsArrow = document.querySelector("#effects-arrow");
+
+const scaleSelect = document.querySelector('#scale');
+const noteLabels = document.querySelectorAll('.note-label');
+const dropdownControls = document.querySelectorAll('.dropdown-control')
+
 const loadScreen = document.querySelector('#load-screen');
 const container = document.querySelector('#container');
 
@@ -26,29 +39,16 @@ async function initialLoad() {
     await apiLoader.loadCurrentScale(1);
     domUpdater.setNoteSelects();
     domUpdater.setNoteLabels();
+    scaleSelect.value = 1
     
     loadScreen.classList.add('hidden');
     container.classList.add('load');
 }
 
-initialLoad()
-
-
+document.addEventListener('DOMContentLoaded', initialLoad)
 
 
 //DROPDOWNS
-const noteSelectsContainer = document.querySelector('#note-selects-container');
-const noteSelects = document.querySelector('#note-selects-container').querySelectorAll('select');
-const noteSelectsTitle = document.querySelector('#note-selects-title');
-const notesArrow = document.querySelector("#notes-arrow");
-
-const effectsContainer = document.querySelector('#effects-container');
-const effectsTitle = document.querySelector('#effects-title');
-const effectsArrow = document.querySelector("#effects-arrow");
-
-const scaleSelect = document.querySelector('#scale');
-const noteLabels = document.querySelectorAll('.note-label');
-const dropdownControls = document.querySelectorAll('.dropdown-control')
 
 dropdownControls.forEach(control => {
     control.addEventListener('click', function (e) {
@@ -132,6 +132,9 @@ reverbSelect.addEventListener('change', effectsControls.changeReverb)
 const saveScaleButton = document.querySelector('#save-scale-button')
 const scaleNameInput = document.querySelector('#scale-name-input')
 const saveScaleConfirmButton = document.querySelector('#save-scale-confirm-button')
+const saveScaleCancelButton = document.querySelector('#save-scale-cancel-button')
+const confirmDiv = document.querySelector('#confirm-div')
+const notice = document.querySelector('#flash-notice-div');
 
 scaleNameInput.addEventListener('keydown', function (e) {
     e.stopPropagation();
@@ -139,10 +142,13 @@ scaleNameInput.addEventListener('keydown', function (e) {
 
 saveScaleButton.addEventListener('click', function(e) {
     e.stopPropagation()
-    saveScaleButton.style.display = 'none'
-    scaleNameInput.style.display = 'block'
-    saveScaleConfirmButton.style.display = 'block'
+    domUpdater.showForm();
 });
+
+saveScaleCancelButton.addEventListener('click', function(e) {
+    e.stopPropagation();
+    domUpdater.hideForm();
+})
 
 saveScaleConfirmButton.addEventListener('click', async function(e) {
     e.stopPropagation()
@@ -154,9 +160,7 @@ saveScaleConfirmButton.addEventListener('click', async function(e) {
         domUpdater.clearSelect(scaleSelect)
         domUpdater.populateScaleSelect()
         scaleSelect.value = saveResult.data.id
-        saveScaleButton.style.display = 'block'
-        scaleNameInput.style.display = 'none'
-        saveScaleConfirmButton.style.display = 'none'
+        domUpdater.hideForm()
     } else {
         domUpdater.flashNotice(`Scale not saved: ${saveResult.data.message}`, false);
         scaleNameInput.classList.add('red-border')
@@ -167,6 +171,14 @@ saveScaleConfirmButton.addEventListener('click', async function(e) {
 
 
 // PERFORMANCE
+instructionsButton = document.querySelector("#instructions-button");
+overlay = document.querySelector("#overlay");
+
+instructionsButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    domUpdater.showInstructions();
+});
+
 document.addEventListener('keydown', function(e) {
     const keyZones = [
             ['z', 'x', 'c', 'v', 'n', 'm', ',', '.', '/'],

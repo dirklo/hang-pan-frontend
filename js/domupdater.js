@@ -35,8 +35,19 @@ const domUpdater = {
         }
     },
 
+    showForm: function() {
+        saveScaleButton.style.display = 'none'
+        scaleNameInput.style.display = 'block'
+        confirmDiv.style.display = 'block'
+    },
+
+    hideForm: function() {
+        saveScaleButton.style.display = 'block'
+        scaleNameInput.style.display = 'none'
+        confirmDiv.style.display = 'none'
+    },
+
     flashNotice: (message, success) => {
-        const notice = document.querySelector('#flash-notice-div');
         notice.innerText = message;
         let status
         success ? status = 'flash-success' : status = 'flash-alert';
@@ -47,6 +58,15 @@ const domUpdater = {
             notice.classList.remove('expand')
             notice.innerText = ""
         }, 5000);
+    },
+
+    showInstructions: function() {
+        overlay.classList.add('overlay-visible');
+        overlay.addEventListener('click', this.removeInstructions);
+    },
+
+    removeInstructions: () => {
+        overlay.classList.remove('overlay-visible');
     }
 }
 

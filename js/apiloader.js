@@ -1,6 +1,6 @@
 const apiLoader = {
-    fetchScales: async function() {
-        return await fetch('https://hang-pan.herokuapp.com/scales')
+    fetchScales: function() {
+        return fetch('https://hang-pan.herokuapp.com/scales')
         .then(response => response.json())
         .then(json => scaleObjects = this.createScaleObjects(json));
     },
@@ -15,7 +15,7 @@ const apiLoader = {
         await fetch('https://hang-pan.herokuapp.com/notes')
         .then(response => response.json())
         .then(json => noteObjects = this.createNoteObjects(json));
-        noteObjects.map(note => note.addNoteBuffers());
+        await noteObjects.map(note => note.addNoteBuffers());
     },
 
     createScaleObjects: (json_data) => {
@@ -24,8 +24,8 @@ const apiLoader = {
         })
     },
 
-    loadCurrentScale: async function(id) {
-        await fetch(`https://hang-pan.herokuapp.com/scales/${id}`)
+    loadCurrentScale: function(id) {
+        return fetch(`https://hang-pan.herokuapp.com/scales/${id}`)
         .then(response => response.json())
         .then(scaleNotes => {
             for (let i = 0; i < scaleNotes.length; i++) {
@@ -78,15 +78,15 @@ const apiLoader = {
         reverb.buffer = reverbBuffers[0];
     },
 
-    fetchBuffers: async function(urls) {
+    fetchNoteBuffers: async function() {
         fetch(this.low_url)
         .then(response => response.arrayBuffer())
-        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => {this.lowBuffer = buffer}, (e) => console.log(e)))
+        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.lowBuffer = buffer, (e) => console.log(e)))
         fetch(this.mid_url)
-        .then(raw => raw.arrayBuffer())
+        .then(response => response.arrayBuffer())
         .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.midBuffer = buffer, (e) => console.log(e)))
         fetch(this.high_url)
-        .then(raw => raw.arrayBuffer())
+        .then(response => response.arrayBuffer())
         .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.highBuffer = buffer, (e) => console.log(e)))
     }
 }

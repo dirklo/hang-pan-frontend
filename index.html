@@ -104,10 +104,19 @@
                 <br>
                 <button type='button' id='save-scale-button'>Save This Scale</button>
                 <input type="text" id="scale-name-input" placeholder="Name Your Scale" style="display: none;">
-                <button id="save-scale-confirm-button" style="display: none;">Save</button>
+                <div id="confirm-div" style="display: none;">
+                    <button id="save-scale-confirm-button">Save</button>
+                    <button id="save-scale-cancel-button">Cancel</button>
+                </div>
             </section>
             <div id="flash-notice-div"></div>
+            <a id="instructions-button">&#9432&nbspHelp</a>
         </main>
+        <div id="overlay">
+            <h2>How To Play:</h2>
+            <img src="img/instructions.png" alt="">
+            <h2>(Click anywhere to return...)</h2>
+        </div>
         <script src="js/array.js"></script>
         <script src="js/note.js"></script>
         <script src="js/scale.js"></script>
