@@ -26,7 +26,9 @@ const domUpdater = {
     },
 
     clearSelect: (select) => {
-        select.childNodes.forEach(option => option.remove())
+        for(let i = select.length - 1; i >= 0; i--) {
+            scaleSelect.childNodes[i].remove()
+        }
     },
 
     setNoteLabels: () => {
@@ -65,9 +67,7 @@ const domUpdater = {
         overlay.addEventListener('click', this.removeInstructions);
     },
 
-    removeInstructions: () => {
+    removeInstructions: function() {
         overlay.classList.remove('overlay-visible');
     }
 }
-
-

@@ -18,6 +18,15 @@ const apiLoader = {
         await noteObjects.map(note => note.addNoteBuffers());
     },
 
+    fetchNoteBuffers: function () {
+        const urls = [this.low_url, this.mid_url, this.high_url]
+        for (let i = 0; i < urls.length; i++) {
+            fetch(urls[i])
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.buffers[i] = buffer, (e) => console.log(e)))
+        }
+    }, 
+
     createScaleObjects: (json_data) => {
         return json_data.map(scale => {
             return new Scale(scale.name, scale.id);
@@ -76,17 +85,5 @@ const apiLoader = {
             .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => reverbBuffers.push(buffer), (e) => console.log(e)))
         ));
         reverb.buffer = reverbBuffers[0];
-    },
-
-    fetchNoteBuffers: async function() {
-        fetch(this.low_url)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.lowBuffer = buffer, (e) => console.log(e)))
-        fetch(this.mid_url)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.midBuffer = buffer, (e) => console.log(e)))
-        fetch(this.high_url)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => this.highBuffer = buffer, (e) => console.log(e)))
     }
 }

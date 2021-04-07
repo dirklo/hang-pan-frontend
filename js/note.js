@@ -9,6 +9,7 @@ class Note {
 
 
     async addNoteBuffers() {
+        this.buffers = []
         await apiLoader.fetchNoteBuffers.call(this)
     }
 };

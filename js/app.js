@@ -188,13 +188,8 @@ document.addEventListener('keydown', function(e) {
     for (let i = 0; i < keyZones.length; i++) {
         if (keyZones[i].includes(e.key)) {
             const index = keyZones[i].indexOf(e.key);
-            const buffers = [
-                currentScale[index].lowBuffer, 
-                currentScale[index].midBuffer, 
-                currentScale[index].highBuffer
-            ];
             const velocities = ['low', 'mid', 'high'];
-            performer.play(buffers[i]);
+            performer.play(currentScale[index].buffers[i]);
             performer.createRipple(index, velocities[i]);
             break;
         }
@@ -205,7 +200,7 @@ for (let label of noteLabels) {
     label.addEventListener('click', function(e) {
         e.stopPropagation()
         const noteIndex = parseInt(e.target.id.slice(11)) - 1;
-        performer.play(currentScale[noteIndex].midBuffer);
+        performer.play(currentScale[noteIndex].buffers[1]);
         performer.createRipple(noteIndex, 'mid');
     });
 }
