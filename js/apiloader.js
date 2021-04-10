@@ -1,6 +1,8 @@
+const apiUrl = "https://hang-pan.herokuapp.com"
+
 const apiLoader = {
     fetchScales: function() {
-        return fetch('https://hang-pan.herokuapp.com/scales')
+        return fetch(`${apiUrl}/scales`)
         .then(response => response.json())
         .then(json => scaleObjects = this.createScaleObjects(json));
     },
@@ -12,7 +14,7 @@ const apiLoader = {
     },
 
     fetchNotes: async function() {
-        await fetch('https://hang-pan.herokuapp.com/notes')
+        await fetch(`${apiUrl}/notes`)
         .then(response => response.json())
         .then(json => noteObjects = this.createNoteObjects(json));
         await noteObjects.map(note => note.addNoteBuffers());
@@ -34,7 +36,7 @@ const apiLoader = {
     },
 
     loadCurrentScale: function(id) {
-        return fetch(`https://hang-pan.herokuapp.com/scales/${id}`)
+        return fetch(`${apiUrl}/scales/${id}`)
         .then(response => response.json())
         .then(scaleNotes => {
             for (let i = 0; i < scaleNotes.length; i++) {
@@ -57,7 +59,7 @@ const apiLoader = {
             body: JSON.stringify(data)
         }
 
-        return await fetch('https://hang-pan.herokuapp.com/scales', config)
+        return await fetch(`${apiUrl}/scales`, config)
         .then(response => {
             if (!response.ok) {
                 return response.json().then(error => { throw error })
