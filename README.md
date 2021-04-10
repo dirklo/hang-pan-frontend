@@ -10,7 +10,7 @@ Fork and clone this repo to your machine.
 
 The back-end is deployed and available through https://hang-pan.herokuapp.com
 
-If you clone and install th back-end repo, you'll have to update the ```apiLoader.js``` file:
+If you clone and install the back-end repo, you'll have to update the ```apiLoader.js``` file:
 
 The ```apiUrl``` variable will have to be set to your local address.  For Example:
 ```http://localhost:3000```
