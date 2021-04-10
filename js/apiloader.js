@@ -1,5 +1,5 @@
-// const apiUrl = "https://hang-pan.herokuapp.com"
-const apiUrl = "http://127.0.0.1:3000"
+const apiUrl = "https://hang-pan.herokuapp.com"
+// const apiUrl = "http://127.0.0.1:3000"
 const apiLoader = {
     fetchScales: function() {
         return fetch(`${apiUrl}/scales`)
