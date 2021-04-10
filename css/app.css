@@ -179,7 +179,7 @@ body {
     text-align: center;
     top: 5%;
     left: 0;
-    height: 7%;
+    height: 55px;
     overflow-y: hidden;
     width: min(42%, 190px);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.429);
@@ -258,7 +258,7 @@ body {
     text-align: center;
     top: 5%;
     right: 0;
-    height: 7%;
+    height: 55px;
     width: min(42%, 190px);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.429);
     overflow: hidden;

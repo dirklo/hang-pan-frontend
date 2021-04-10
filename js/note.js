@@ -8,8 +8,8 @@ class Note {
     };
 
 
-    async addNoteBuffers() {
+    addNoteBuffers() {
         this.buffers = []
-        await apiLoader.fetchNoteBuffers.call(this)
+        apiLoader.fetchNoteBuffers.call(this)
     }
 };

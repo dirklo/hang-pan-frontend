@@ -40,6 +40,9 @@ async function initialLoad() {
     domUpdater.setNoteSelects();
     domUpdater.setNoteLabels();
     scaleSelect.value = 1
+
+    await apiLoader.loadReverbs()
+    reverb.buffer = reverbBuffers[0];
     
     loadScreen.classList.add('hidden');
     container.classList.add('load');
@@ -48,8 +51,7 @@ async function initialLoad() {
 document.addEventListener('DOMContentLoaded', initialLoad)
 
 
-//DROPDOWNS
-
+//NOTES AND EFFECTS DROPDOWNS
 dropdownControls.forEach(control => {
     control.addEventListener('click', function (e) {
         e.stopPropagation()
@@ -77,7 +79,6 @@ scaleSelect.onclick = (e) => e.stopPropagation()
 
 
 //SWITCHING SCALES AND SAMPLES
-
 scaleSelect.addEventListener('change', async function(e) {
     e.stopPropagation();
     await apiLoader.loadCurrentScale(scaleSelect.value)
@@ -115,7 +116,6 @@ const reverbWetController = document.querySelector('#reverb-wet-controller')
 const reverbSelect = document.querySelector('#reverb-select')
 
 effectsControls.connectEffects()
-apiLoader.loadReverbs()
 
 volumeController.addEventListener('input', effectsControls.changeVolume)
 delayTimeController.addEventListener('input', effectsControls.changeDelayTime)

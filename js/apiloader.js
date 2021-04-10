@@ -79,11 +79,10 @@ const apiLoader = {
             'https://res.cloudinary.com/dn4l2f1ea/video/upload/v1617632408/hang-pan/Impulse%20Responses/hall_zdubir.mp3',
             'https://res.cloudinary.com/dn4l2f1ea/video/upload/v1617632408/hang-pan/Impulse%20Responses/outdoor_b9gvkp.mp3'
         ]
-        await Promise.all(urls.map(url => 
-            fetch(url)
+        for(let i = 0; i < urls.length; i++) {
+            await fetch(urls[i])
             .then(response => response.arrayBuffer())
-            .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => reverbBuffers.push(buffer), (e) => console.log(e)))
-        ));
-        reverb.buffer = reverbBuffers[0];
+            .then(arrayBuffer => context.decodeAudioData(arrayBuffer, (buffer) => reverbBuffers[i] = buffer, (e) => console.log(e)))
+        }
     }
 }
