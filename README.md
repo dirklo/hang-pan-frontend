@@ -52,7 +52,7 @@ Open the "Effects" menu by clicking the "Effects" button.
 - A higher level results in a more distant sound, as if you were standing further from the instrument.
 
 #### Reverb Dry
-- Constrols the level of only the direct samples as you play.  
+- Controls the level of only the direct samples as you play.  
 - Use this to control the blend of the "wet" sound with the "dry" sound to dial in the reverb.
 
 #### Reverb Type
