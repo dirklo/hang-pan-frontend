@@ -1,5 +1,8 @@
+// API options
 const apiUrl = "https://hang-pan.herokuapp.com"
 // const apiUrl = "http://127.0.0.1:3000"
+
+
 const apiLoader = {
     fetchScales: function() {
         return fetch(`${apiUrl}/scales`)
@@ -19,7 +22,7 @@ const apiLoader = {
         .then(json => noteObjects = this.createNoteObjects(json));
         await noteObjects.map(note => note.addNoteBuffers());
     },
-
+    
     fetchNoteBuffers: function () {
         const urls = [this.low_url, this.mid_url, this.high_url]
         for (let i = 0; i < urls.length; i++) {

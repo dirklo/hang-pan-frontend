@@ -8,6 +8,8 @@ if (AudioContext) {
     alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
 }
 
+
+// INITIAL LOAD
 const noteSelectsContainer = document.querySelector('#note-selects-container');
 const noteSelects = document.querySelector('#note-selects-container').querySelectorAll('select');
 const noteSelectsTitle = document.querySelector('#note-selects-title');
