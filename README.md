@@ -15,8 +15,17 @@ If you clone and install the back-end repo, you'll have to update the ```apiLoad
 The ```apiUrl``` variable will have to be set to your local address.  For Example:
 ```http://localhost:3000```
 
+# Key Features
 
-## Playing Instructions
+## Database
+Pantam uses a simple Rails API on the back-end, with only 3 models.  A hard-coded set of audio samples are loaded from Cloudinary, into local buffers on the note objects. These notes can be organized into scales, and saved on the database.
+
+![pantam-database](https://user-images.githubusercontent.com/72274257/122440982-61a5c100-cf9d-11eb-91b0-c9a1e6f4a713.jpg)
+
+## WebAudioAPI Implementation
+
+
+## Playing the Instrument
 
 ### The Keyboard Map
 Use the keyboard to play the 9 notes of the instrument.  
@@ -24,6 +33,8 @@ Use the keyboard to play the 9 notes of the instrument.
 - The home row (a s d f h j k l ;) trigger the medium versions of the notes.
 - The top row (q w e r y u i o p) trigger the loud versions of the notes.
 View the keymap by clicking the "help" icon in the bottom right corner of the app.
+
+![pantam-help](https://user-images.githubusercontent.com/72274257/122440250-ab41dc00-cf9c-11eb-8de5-53911ddf61bd.jpg)
 
 ### Selecting Notes
 Use the "Notes" menu, by clicking the "Notes" button to select which notes each position of the pan produce.
