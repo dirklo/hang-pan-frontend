@@ -6,13 +6,15 @@ This project was built entirly with vanilla Javascript, HTML and CSS with no dep
 
 ## Installation Instructions
 
-Fork and clone this repo to your machine.
+* Fork and clone this repo to your machine.
+* Simply open `index.html` in your browser to start the application.
+* View the fully deployed application here: https://dirklo.github.io/hang-pan-frontend/
+* The back-end is deployed at: https://hang-pan.herokuapp.com
+* You can also view the public repo for the back-end at: https://github.com/dirklo/hang-pan-backend
 
-The back-end is deployed and available through https://hang-pan.herokuapp.com
+Note: If you clone and install the back-end repo, you'll have to update the ```apiLoader.js``` file:
 
-If you clone and install the back-end repo, you'll have to update the ```apiLoader.js``` file:
-
-The ```apiUrl``` variable will have to be set to your local address.  For Example:
+* The ```apiUrl``` variable will have to be set to your local address.  For Example:
 ```http://localhost:3000```
 
 # Key Features
@@ -23,7 +25,9 @@ Pantam uses a simple Rails API on the back-end, with only 3 models.  A hard-code
 ![pantam-database](https://user-images.githubusercontent.com/72274257/122440982-61a5c100-cf9d-11eb-91b0-c9a1e6f4a713.jpg)
 
 ## WebAudioAPI Implementation
+WebAudioAPI is the heart of the application.  All of the audio sampling, performance, and effects are built through its built-in features.  For more explanation on my approach, reference my blog post which dives into more detail.
 
+https://medium.com/geekculture/building-a-modular-synth-with-web-audio-api-and-javascript-d38ccdeca9ea
 
 ## Playing the Instrument
 
@@ -36,12 +40,18 @@ View the keymap by clicking the "help" icon in the bottom right corner of the ap
 
 ![pantam-help](https://user-images.githubusercontent.com/72274257/122440250-ab41dc00-cf9c-11eb-8de5-53911ddf61bd.jpg)
 
+![pantam-playing](https://user-images.githubusercontent.com/72274257/122443038-78e5ae00-cf9f-11eb-87d8-150a9a0289b9.gif)
+
 ### Selecting Notes
 Use the "Notes" menu, by clicking the "Notes" button to select which notes each position of the pan produce.
 Notes may be repeated in several slots, and any chromatic note between C2 and A3 may be selected.
 
+![pantam-notes-select](https://user-images.githubusercontent.com/72274257/122442483-eb09c300-cf9e-11eb-97d0-7d447e0f9aea.gif)
+
 ### Effects
 Open the "Effects" menu by clicking the "Effects" button.
+
+![pantam-effects](https://user-images.githubusercontent.com/72274257/122443490-ef82ab80-cf9f-11eb-8b1c-2be51c2a698f.jpg)
 
 #### Volume
 - Controls your master output volume.
@@ -78,3 +88,6 @@ Comes loaded with 3 reverb types:
 ### Saving a Scale
 - Select the notes for a new scale, and click the "Save This Scale" button.  This allows you to enter a name for your scale and save it to the master scale list.
 - You cannot save a scale with a name that already exists on the list, or with a blank name.
+
+## What's Next?
+Pantam was a fun project to work on, as I never knew that our browsers came with such a powerful synthesizer and sampler built-in.  If I were to add to this project, I would use this project as a framework and build other instruments and in-browser looping to create something of a musical game to play. 
