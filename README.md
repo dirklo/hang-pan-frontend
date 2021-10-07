@@ -8,9 +8,9 @@ This project was built entirly with vanilla Javascript, HTML and CSS with no dep
 
 * Fork and clone this repo to your machine.
 * Simply open `index.html` in your browser to start the application.
-* View the fully deployed application here: https://dirklo.github.io/hang-pan-frontend/
+* View the fully deployed application here: https://rick-moore.github.io/hang-pan-frontend/
 * The back-end is deployed at: https://hang-pan.herokuapp.com
-* You can also view the public repo for the back-end at: https://github.com/dirklo/hang-pan-backend
+* You can also view the public repo for the back-end at: https://github.com/rick-moore/hang-pan-backend
 
 Note: If you clone and install the back-end repo, you'll have to update the ```apiLoader.js``` file:
 
